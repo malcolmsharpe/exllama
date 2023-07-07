@@ -1,3 +1,5 @@
+# Generate with the same sampling as example_chatbot.py.
+
 from model import ExLlama, ExLlamaCache, ExLlamaConfig
 from tokenizer import ExLlamaTokenizer
 from generator import ExLlamaGenerator
@@ -29,17 +31,18 @@ generator = ExLlamaGenerator(model, tokenizer, cache)   # create generator
 
 generator.disallow_tokens([tokenizer.eos_token_id])
 
-generator.settings.token_repetition_penalty_max = 1.2
 generator.settings.temperature = 0.95
 generator.settings.top_p = 0.65
-generator.settings.top_k = 100
-generator.settings.typical = 0.5
+generator.settings.top_k = 20
+generator.settings.token_repetition_penalty_max = 1.15
+generator.settings.token_repetition_penalty_sustain = 256
+generator.settings.token_repetition_penalty_decay = generator.settings.token_repetition_penalty_sustain // 2
 
 # Produce a simple generation
 
-prompt = "Once upon a time,"
+prompt = open('prompt_repro_2023_07_05.txt', 'r').read().strip()
 print (prompt, end = "")
 
-output = generator.generate_simple(prompt, max_new_tokens = 200)
+output = generator.generate_simple(prompt, max_new_tokens = 40)
 
 print(output[len(prompt):])

@@ -97,7 +97,7 @@ break_on_newline = not args.no_newline
 
 # Be nice to Chatbort
 
-min_response_tokens = 4
+min_response_tokens = 1
 max_response_tokens = 256
 extra_prune = 256
 
@@ -158,13 +158,20 @@ while True:
     generator.begin_beam_search()
 
     for i in range(max_response_tokens):
+        disallow_tokens = []
 
         # Disallowing the end condition tokens seems like a clean way to force longer replies.
-
         if i < min_response_tokens:
-            generator.disallow_tokens([tokenizer.newline_token_id, tokenizer.eos_token_id])
-        else:
-            generator.disallow_tokens(None)
+            disallow_tokens.extend([tokenizer.newline_token_id, tokenizer.eos_token_id])
+
+        # Hack to prevent glitching into endless spam.
+        max_repeat_tokens = 3
+        if num_res_tokens >= max_repeat_tokens:
+            recent_token_set = set(generator.sequence_actual[0, -max_repeat_tokens:].tolist())
+            if len(recent_token_set) == 1:
+                disallow_tokens.extend(list(recent_token_set))
+
+        generator.disallow_tokens(disallow_tokens)
 
         # Get a token
 
