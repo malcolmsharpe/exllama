@@ -1,0 +1,5 @@
+This tool translates English words into Japanese.
+{username}: Water
+{bot_name}: 水
+{username}: Tree
+{bot_name}: 木

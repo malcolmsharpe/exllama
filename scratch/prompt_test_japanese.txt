@@ -1,0 +1,5 @@
+Horse: 馬
+Water: 水
+Cat: 猫
+Sun: 太陽
+Rabbit:

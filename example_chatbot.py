@@ -186,6 +186,18 @@ while True:
 
         num_res_tokens += 1
         text = tokenizer.decode(generator.sequence_actual[:, -num_res_tokens:][0])
+
+        # Hack: Some Unicode code points are encoded as multiple tokens.
+        # Since the response is generated one token at a time,
+        # while such a code point is being generated, the decoder returns a "replacement character" instead.
+        # These replacement characters don't appear in the final decoded generation,
+        # so if we print them in the meantime, the terminal output will be wrong.
+        # The reason this is a hack is that the model might _intentionally_ generate a replacement character, 
+        # in which case we'll delay printing it until some other code point appears after.
+        # However, since the chatbot responses are usually terminated with a newline,
+        # this hopefully is a negligible corner case.
+        text = text.rstrip('�')
+
         new_text = text[len(res_line):]
 
         skip_space = res_line.endswith("\n") and new_text.startswith(" ")  # Bit prettier console output

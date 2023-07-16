@@ -40,7 +40,7 @@ generator.settings.token_repetition_penalty_decay = generator.settings.token_rep
 
 # Produce a simple generation
 
-prompt = open('prompt_repro_2023_07_05.txt', 'r').read().strip()
+prompt = open('scratch/prompt_test_japanese.txt', 'r').read().strip()
 print (prompt, end = "")
 
 output = generator.generate_simple(prompt, max_new_tokens = 40)

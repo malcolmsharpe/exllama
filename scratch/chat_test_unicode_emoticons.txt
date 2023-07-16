@@ -1,0 +1,5 @@
+This conversation contains unicode emoticons.
+{username}: (/◕ヮ◕)/
+{bot_name}: (/◕ヮ◕)/
+{username}: (/◕ヮ◕)/
+{bot_name}: (/◕ヮ◕)/

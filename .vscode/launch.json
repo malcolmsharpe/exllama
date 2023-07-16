@@ -18,8 +18,8 @@
       "request": "launch",
       "program": "example_chatbot.py",
       "console": "integratedTerminal",
-      "justMyCode": true,
-      "args": ["-d", "../LLaMA-65B-4bit-32g", "-un", "Jeff", "-bn", "Chatbort", "-p", "prompt_chatbort.txt"]
+      "justMyCode": false,
+      "args": ["-d", "../LLaMA-65B-4bit-32g", "-un", "User", "-bn", "Bot", "-p", "scratch/chat_test_unicode_emoticons.txt"]
     }
   ]
 }
